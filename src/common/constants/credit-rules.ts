@@ -1,0 +1,4 @@
+export const CREDIT_RULES = {
+  MIN_LIMIT: 5000,
+  MAX_LIMIT: 100000,
+};
