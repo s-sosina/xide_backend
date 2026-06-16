@@ -1,7 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToOne } from 'typeorm';
 import { UserRole } from '../../../common/enums/user-role.enum';
-
-
+import { EmployerProfile } from '../../employers/entities/employer-profile.entity';
 
 
 @Entity('users')
@@ -30,4 +29,7 @@ export class User {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToOne(() => EmployerProfile, (employerProfile) => employerProfile.user)
+  employerProfile: EmployerProfile;
 }

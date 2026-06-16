@@ -15,6 +15,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { WorkersModule } from './modules/workers/workers.module';
 import { EmployersModule } from './modules/employers/employers.module';
+import { EmploymentRecordsModule } from './modules/employment-records/employment-records.module';
 import { FoodProductsModule } from './modules/food-products/products.module';
 import { FoodPackagesModule } from './modules/food-packages/packages.module';
 import { CartModule } from './modules/cart/cart.module';
@@ -50,6 +51,7 @@ import { AdminModule } from './modules/admin/admin.module';
     UsersModule,
     WorkersModule,
     EmployersModule,
+    EmploymentRecordsModule,
     FoodProductsModule,
     FoodPackagesModule,
     CartModule,

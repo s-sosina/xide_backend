@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { WorkerProfile } from '../../workers/entities/worker-profile.entity';
+import { EmploymentRecord } from '../../employment-records/entities/employment-record.entity';
 import { OrderItem } from './order-item.entity';
 import { OrderStatus } from '../../../common/enums/order-status.enum';
 import { RepaymentCycle } from '../../../common/enums/repayment-cycle.enum';
@@ -9,8 +9,8 @@ export class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => WorkerProfile)
-  worker: WorkerProfile;
+  @ManyToOne(() => EmploymentRecord)
+  employment: EmploymentRecord;
 
   @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.PENDING })
   status: OrderStatus;

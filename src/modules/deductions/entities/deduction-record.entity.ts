@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { RepaymentPlan } from '../../repayment-plans/entities/repayment-plan.entity';
-import { WorkerProfile } from '../../workers/entities/worker-profile.entity';
+import { EmploymentRecord } from '../../employment-records/entities/employment-record.entity';
 import { EmployerProfile } from '../../employers/entities/employer-profile.entity';
 import { RemittanceTransaction } from '../../remittances/entities/remittance-transaction.entity';
 
@@ -12,8 +12,8 @@ export class DeductionRecord {
   @ManyToOne(() => RepaymentPlan, plan => plan.deductionRecords)
   repaymentPlan: RepaymentPlan;
 
-  @ManyToOne(() => WorkerProfile)
-  worker: WorkerProfile;
+  @ManyToOne(() => EmploymentRecord)
+  employment: EmploymentRecord;
 
   @ManyToOne(() => EmployerProfile)
   employer: EmployerProfile;

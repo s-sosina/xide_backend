@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Order } from '../../orders/entities/order.entity';
-import { WorkerProfile } from '../../workers/entities/worker-profile.entity';
+import { EmploymentRecord } from '../../employment-records/entities/employment-record.entity';
 import { DeductionRecord } from '../../deductions/entities/deduction-record.entity';
 
 @Entity('repayment_plans')
@@ -12,8 +12,8 @@ export class RepaymentPlan {
   @JoinColumn()
   order: Order;
 
-  @ManyToOne(() => WorkerProfile)
-  worker: WorkerProfile;
+  @ManyToOne(() => EmploymentRecord)
+  employment: EmploymentRecord;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   totalAmount: number;

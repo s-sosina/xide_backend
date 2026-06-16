@@ -15,7 +15,10 @@ export class EmployerProfile {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => User)
+  @OneToOne(
+    () => User,
+    (user) => user.employerProfile,
+  )
   @JoinColumn()
   user: User;
 

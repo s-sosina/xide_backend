@@ -13,5 +13,6 @@ class EmployerResponseDto {
 export class AuthResponseDto {
   accessToken: string;
   user: UserResponseDto;
-  employer: EmployerResponseDto;
+  employer?: EmployerResponseDto;
+  
 }

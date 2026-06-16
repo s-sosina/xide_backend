@@ -2,12 +2,13 @@ import {
   Injectable,
   BadRequestException,
   ConflictException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-
+import { LoginDto } from './dto/login.dto';
 import { User } from '../users/entities/user.entity';
 import { EmployerProfile } from '../employers/entities/employer-profile.entity';
 import { EmployerRegisterDto } from '../employers/dto/register-employer.dto';
@@ -98,5 +99,59 @@ export class AuthService {
         },
       };
     });
+  }
+
+  async login(dto: LoginDto): Promise<AuthResponseDto> {
+    // 1. Find user by email
+    const user = await this.userRepository.findOne({
+      where: {
+        email: dto.email,
+      },
+      relations: {
+        employerProfile: true,
+      },
+    });
+
+    // 2. Verify password
+    const passwordValid =
+      user && (await bcrypt.compare(dto.password, user.password));
+
+    if (!user || !passwordValid) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+
+    // 3. Restrict employer login
+    if (user.role !== UserRole.EMPLOYER) {
+      throw new UnauthorizedException('Access restricted to employer accounts');
+    }
+
+    // 4. Generate JWT payload
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    // 5. Sign token
+    const accessToken = await this.jwtService.signAsync(payload);
+
+    // 6. Return auth response
+    return {
+      accessToken,
+
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
+
+      employer: user.employerProfile
+        ? {
+            id: user.employerProfile.id,
+            organizationName: user.employerProfile.organizationName,
+            verificationStatus: user.employerProfile.verificationStatus,
+          }
+        : undefined,
+    };
   }
 }

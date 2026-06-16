@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateWorkerDto {
   @IsNotEmpty()
@@ -7,13 +7,9 @@ export class CreateWorkerDto {
 
   @IsNotEmpty()
   @IsString()
-  employerId: string;
-
-  @IsNotEmpty()
-  @IsNumber()
-  salary: number;
+  firstName: string;
 
   @IsNotEmpty()
   @IsString()
-  employeeId: string;
+  lastName: string;
 }
